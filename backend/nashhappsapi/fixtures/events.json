@@ -1,0 +1,24 @@
+[
+  {
+    "model": "nashhappsapi.event",
+    "pk": 1,
+    "fields": {
+      "date": "2023-11-25",
+      "venue": 1,
+      "band": 1,
+      "time": "20:00",
+      "creator": 1
+    }
+  },
+  {
+    "model": "nashhappsapi.event",
+    "pk": 2,
+    "fields": {
+      "date": "2023-11-26",
+      "venue": 2,
+      "band": 2,
+      "time": "21:00",
+      "creator": 1
+    }
+  }
+]
