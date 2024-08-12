@@ -1,18 +1,20 @@
-import requests
-from bs4 import BeautifulSoup
-from datetime import datetime
-from rest_framework.views import APIView
+from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from models import Event, Venue, Band, Creator
+from rest_framework import serializers
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
 
-
-class TheLocalEventView(APIView):
-
-    def get(self, request):
+class TheLocalEventViewSet(viewsets.ViewSet):
+    
+    @action(detail=False, methods=['get'])
+    def fetch_events(self, request):
         url = 'https://localnash.com/calendar/'
         today = datetime.today().strftime('%Y%m%d')
-        
+
         response = requests.get(url)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -32,15 +34,8 @@ class TheLocalEventView(APIView):
                         'description': "Lipsum"
                     })
             
-            # Example: Assume venue_name, band_name, creator_username are provided in the request
-            venue_name = request.GET.get('venue_name', 'Default Venue')
-            band_name = request.GET.get('band_name', 'Default Band')
-            creator_username = request.GET.get('creator_username', 'Default Creator')
-
-            venue = Venue.objects.get(name=venue_name)
-            band = Band.objects.get(name=band_name)
-            creator = Creator.objects.get(username=creator_username)
-            
+            venue = Venue.objects.get(name='The Local')
+            # Assuming band names are matched to event titles, adjust as necessary
             for event in events:
                 event_date = datetime.strptime(event['date'], '%Y%m%d').date()
                 event_time = datetime.strptime(event['time'], '%I:%M %p').time()  # Adjust time format if necessary
@@ -48,23 +43,23 @@ class TheLocalEventView(APIView):
                 event_data = {
                     'date': event_date,
                     'venue': venue.id,
-                    'band': band.id,
+                    'band': Band.objects.get_or_create(name=event['title'])[0].id,
                     'time': event_time,
-                    'creator': creator.id
+                    # 'creator': creator.id  # Add as needed
                 }
 
                 serializer = EventSerializer(data=event_data)
                 if serializer.is_valid():
                     serializer.save()
                 else:
-                    print(serializer.errors)
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
             return Response(events, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Failed to fetch webpage"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BandSerializer(ModelSerializer):
+class BandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Band
         fields = '__all__'
