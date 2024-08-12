@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-from models import Event, Venue, Band, Creator
+from nashhappsapi.models import Event, Venue, Band, Creator
 from rest_framework import serializers
 import requests
 from bs4 import BeautifulSoup
