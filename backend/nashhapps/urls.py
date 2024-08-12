@@ -15,12 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
+from django.contrib import admin
 from rest_framework.routers import DefaultRouter
-from nashhappsapi.views import TheLocalEventViewSet
+from nashhappsapi.views.localnash import TheLocalEventViewSet
 
 router = DefaultRouter()
 router.register(r'local_events', TheLocalEventViewSet, basename='local_event')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('admin/', admin.site.urls),
+    path('api/', include('nashhappsapi.urls')),  # Your app URLs
+    path('accounts/', include('allauth.urls')),  # Django Allauth URLs
 ]
