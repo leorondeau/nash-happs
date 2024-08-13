@@ -32,6 +32,7 @@ backend/venv/
 # SQLite databases
 backend/*.db
 backend/*.sqlite3
+backend/settings.py
 
 # Git Large File Storage
 *.gitattributes
