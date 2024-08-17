@@ -33,6 +33,7 @@ backend/venv/
 backend/*.db
 backend/*.sqlite3
 backend/settings.py
+session.sql
 
 # Git Large File Storage
 *.gitattributes
