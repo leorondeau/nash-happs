@@ -1,32 +1,40 @@
-from tools.ig_scraper import download_images
-from tools.image_processor import extract_text_from_image
-from nashhappsapi.models import Event, Band, Venue
-from datetime import datetime
 
-def process_events():
-    # Define constants
-    PROFILE_NAME = 'your_instagram_profile'
-    VENUE_NAME = 'Bobbys Idle Hour'# Download images
-    images = download_images(PROFILE_NAME)
-    
-    # Get or create venue
-    venue, _ = Venue.objects.get_or_create(name=VENUE_NAME)
-    
-    # Delete previous day's events
-    today = datetime.today().date()
-    Event.objects.exclude(date=today).delete()
-    
-    for image_url in images:
-        text = extract_text_from_image(image_url)
-        # Process the text to extract dates, bands, and other details# Assuming you have a function to parse this text
-        events = parse_event_text(text)
-        
-        for event in events:
-            band, _ = Band.objects.get_or_create(name=event['band_name'])
-            Event.objects.create(
-                date=today,
-                venue=venue,
-                band=band,
-                time=event['time'],
-                creator=None# Assuming creator is not handled here
-            )
+from nashhappsapi.models import Event, Band, Venue, Creator
+from tools.image_processor import extract_text_from_image
+from datetime import datetime
+import re
+import sys
+import os
+
+
+def process_events(posts):
+    for post in posts:
+        has_date, extracted_text = extract_text_from_image(post)
+        if has_date:
+            save_event_details(post, extracted_text)
+            break# Stop after finding the post with the current date
+def save_event_details(post, extracted_text):
+    band_names = re.findall(r'\b[A-Z][a-z]+\b', extracted_text)
+    band_name = ' '.join(band_names) if band_names else'Unknown Band'
+
+    venue, created = Venue.objects.get_or_create(
+        name='Bobbys Idle Hour',
+        defaults={'website': 'http://www.bobbysidlehour.com'}
+    )
+
+    band, created = Band.objects.get_or_create(name=band_name)
+
+    creator, created = Creator.objects.get_or_create(
+        username='admin',
+        defaults={'email': 'admin@example.com', 'user_id': 1}
+    )
+
+    Event.objects.create(
+        date=datetime.now().date(),
+        venue=venue,
+        band=band,
+        time=datetime.now().time(),
+        creator=creator
+    )
+
+    print(f"Post from {post.date} with shortcode {post.shortcode} saved to the database.")
