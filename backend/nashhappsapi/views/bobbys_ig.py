@@ -45,8 +45,7 @@ def fetch_bobbys_events():
             return False, ""
         except Exception as e:
             print(f"Error processing post {post.shortcode}: {e}")
-            return False, ""
-        # Iterate through posts
+            return False, ""# Iterate through posts
     today = datetime.now().date()
     venue, created = Venue.objects.get_or_create(name="Bobby's Idle Hour")
     
@@ -57,35 +56,36 @@ def fetch_bobbys_events():
             print("Date language found")
             
             # Extract the date range
-            date_range_pattern = re.compile(r'(\w+ \d+-\d+)')
+            date_range_pattern = re.compile(r'(\w+ \d+-\d+)', re.IGNORECASE)
             date_range_match = date_range_pattern.search(text)
-            
             if not date_range_match:
+                # Handle the format without spaces
                 date_range_pattern = re.compile(r'(\w+)(\d+)-(\d+)', re.IGNORECASE)
                 date_range_match = date_range_pattern.search(text)
 
-            
             if date_range_match:
-                if ' ' in date_range_match.group(1):
+                if' 'in date_range_match.group(1):
                     start_month_day, end_day = date_range_match.group(1).split('-')
                 else:
-                    start_month = date_range_match.group(1)[:3]
-                    start_day = date_range_match.group(1)[3:]
+                    start_month = date_range_match.group(1)[:len(date_range_match.group(1)) - 2]
+                    start_day = date_range_match.group(1)[len(date_range_match.group(1)) - 2:]
                     end_day = date_range_match.group(2)
                     start_month_day = f"{start_month}{start_day}"
-                    
+
                 start_month, start_day = start_month_day.split()
                 start_day = int(start_day)
                 end_day = int(end_day)
 
                 # Convert the date range to actual dates
-                start_date = datetime.strptime(f"{start_month}{start_day}{datetime.now().year}", "%b %d %Y")
+                start_date = datetime.strptime(f"{start_month} {start_day} {datetime.now().year}", "%B %d %Y")
+
+
                 days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
                 day_to_date = {days_of_week[i]: (start_date + timedelta(days=i)).strftime("%A, %B %d") for i in range(len(days_of_week))}
 
                 # Extract and save today's events
                 day_event_pattern = re.compile(r'(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s*(.*?)\s*(?=(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|$))', re.DOTALL)
-                found_today = False 
+                found_today = False
                 for day_event in day_event_pattern.findall(text):
                     day, events, _ = day_event
                     event_date_str = day_to_date.get(day.strip())
@@ -105,11 +105,9 @@ def fetch_bobbys_events():
                                     time=datetime.now().time()  # Assuming time is not provided, use current time
                                 )
                                 print(f"Saved event: {event_date}, {band_name}")
-                            break
-                        # Stop processing further as today's date is found
+                            break# Stop processing further as today's date is found 
                         if found_today:
                             print("Today's events found and saved.")
-                            break
-                        # Stop processing further posts 
+                            break# Stop processing further posts
 if __name__ == "__main__":
     fetch_bobbys_events()
