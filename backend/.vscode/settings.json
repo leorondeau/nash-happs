@@ -3,7 +3,7 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "database": "${workspaceFolder:nash-happs-api}/db.sqlite3",
+            "database": "${workspaceFolder:backend}/db.sqlite3",
             "name": "nashDB"
         }
     ]
