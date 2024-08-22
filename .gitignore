@@ -25,6 +25,7 @@ yarn-error.log*
 # Environment variables (local development)
 backend/.env
 *.env*.local
+,env
 
 # Virtual environment
 backend/venv/
@@ -34,6 +35,9 @@ backend/*.db
 backend/*.sqlite3
 backend/settings.py
 session.sql
+
+temp
+/temp
 
 # Git Large File Storage
 *.gitattributes

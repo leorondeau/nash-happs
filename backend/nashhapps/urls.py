@@ -18,9 +18,11 @@ from django.urls import path, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from nashhappsapi.views.localnash import TheLocalEventViewSet
+from nashhappsapi.views.events import FetchEventsViewSet
 
 router = DefaultRouter(trailing_slash=False)
 router.register(r'localevents', TheLocalEventViewSet, 'localevent')
+router.register(r'fetch_events', FetchEventsViewSet, basename='fetch_events')
 
 urlpatterns = [
     path('', include(router.urls)),
