@@ -24,10 +24,12 @@ yarn-error.log*
 
 # Environment variables (local development)
 backend/.env
-*.env*.local
+*.env
+*.local
 env
-
 /Users/admin/workspace/nash-happs/backend/.env
+/Users/admin/workspace/nash-happs/backend/.env
+/Users/admin/workspace/nash-happs/.env
 
 # Virtual environment
 backend/venv/
