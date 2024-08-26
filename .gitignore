@@ -25,7 +25,9 @@ yarn-error.log*
 # Environment variables (local development)
 backend/.env
 *.env*.local
-,env
+env
+
+/Users/admin/workspace/nash-happs/backend/.env
 
 # Virtual environment
 backend/venv/
