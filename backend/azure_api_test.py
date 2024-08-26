@@ -4,13 +4,16 @@ from msrest.authentication import CognitiveServicesCredentials
 import os
 from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
 import time
+from dotenv import load_dotenv
 
-# Set up your credentials
-subscription_key = ""  # Replace with your API key
-endpoint = ""  # Replace with your endpoint URL
+load_dotenv()
+
+VISION_ENDPOINT = os.environ["VISION_ENDPOINT"]
+VISION_KEY = os.environ["VISION_KEY"]
+
 
 # Authenticate client
-computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
+computervision_client = ComputerVisionClient(VISION_ENDPOINT, CognitiveServicesCredentials(VISION_KEY))
 
 # Function to extract text from an image
 def extract_text_from_image(image_path):
