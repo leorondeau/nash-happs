@@ -34,6 +34,7 @@ env
 # Virtual environment
 backend/venv/
 backend/venv
+/Users/admin/workspace/nash-happs/backend/venv
 
 # SQLite databases
 backend/*.db
