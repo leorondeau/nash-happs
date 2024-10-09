@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "eventDB",
+            "database": "/Users/admin/workspace/nash-happs/backend/db.sqlite3"
+        }
+    ]
+}
