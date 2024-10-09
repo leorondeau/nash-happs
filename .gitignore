@@ -1,5 +1,6 @@
 # Node.js dependencies
 frontend/node_modules/
+/Users/admin/workspace/nash-happs/frontend/node_modules
 
 # Next.js build and cache
 frontend/.next/
