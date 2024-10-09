@@ -1,6 +1,5 @@
 # Node.js dependencies
 frontend/node_modules/
-/Users/admin/workspace/nash-happs/frontend/node_modules
 
 # Next.js build and cache
 frontend/.next/
@@ -27,24 +26,20 @@ yarn-error.log*
 backend/.env
 *.env
 *.local
-env
-/Users/admin/workspace/nash-happs/backend/.env
-/Users/admin/workspace/nash-happs/backend/.env
-/Users/admin/workspace/nash-happs/.env
+
+backup-repo/
 
 # Virtual environment
 backend/venv/
-backend/venv
-/Users/admin/workspace/nash-happs/backend/venv
+backend/venv/
 
 # SQLite databases
 backend/*.db
 backend/*.sqlite3
-backend/settings.py
-session.sql
 
-temp
-/temp
+# Temporary files
+temp/
+temp/*
 
 # Git Large File Storage
 *.gitattributes
@@ -58,7 +53,6 @@ coverage/
 *.pyc
 __pycache__/
 *.pyo
-*.pyd
 *.pyd
 
 # Miscellaneous
