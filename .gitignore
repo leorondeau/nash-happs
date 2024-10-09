@@ -33,6 +33,7 @@ env
 
 # Virtual environment
 backend/venv/
+backend/venv
 
 # SQLite databases
 backend/*.db
