@@ -24,6 +24,7 @@ load_dotenv()
 os.makedirs('temp', exist_ok=True)
 
 # Function to fetch and validate Instagram posts
+
 def fetch_and_validate_instagram_posts(username):
     L = Instaloader()
     profile = Profile.from_username(L.context, username)
