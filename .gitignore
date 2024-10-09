@@ -65,3 +65,5 @@ __pycache__/
 .pnp
 .pnp.js
 .yarn/install-state.gz
+
+backup-repo/
