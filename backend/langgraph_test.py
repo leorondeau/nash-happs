@@ -1,5 +1,7 @@
 import os
-import openai
+from openai import AzureOpenAI
+
+
 from typing import Literal
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
@@ -11,10 +13,10 @@ from dotenv import load_dotenv
 # Load environment variables for Azure OpenAI credentials
 load_dotenv()
 
-openai.api_key = os.getenv('AZURE_OPENAI_API_KEY')
-openai.api_type = "azure"
-openai.api_base = os.getenv('AZURE_OPENAI_ENDPOINT')
-openai.api_version = os.getenv('API_VERSION')
+client = AzureOpenAI(api_key=os.getenv('AZURE_OPENAI_API_KEY'),
+azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'),
+api_version=os.getenv('API_VERSION'))
+
 
 # Define the tools for the agent to use
 @tool
@@ -32,23 +34,22 @@ tool_node = ToolNode(tools)
 # Function to invoke Azure OpenAI model
 def call_azure_openai(messages):
     """Call the Azure OpenAI model with a list of messages."""
-    azure_response = openai.ChatCompletion.create(
-        engine="gpt-35-turbo",  # Replace with your actual deployment name
-        messages=messages,
-        max_tokens=50,
-        temperature=0  # Adjust if needed
-    )
-    return azure_response['choices'][0]['message']['content']
-
+    azure_response=client.chat.completions.create(
+    model="gpt-35-turbo",
+    messages=messages,
+    max_tokens=50,
+    temperature=0)
+    return azure_response.choices[0].message.content
+    
 # Replace the model definition using Azure OpenAI
 def call_model(state: MessagesState):
     messages = state['messages']
     # Prepare messages in the format required by Azure OpenAI
     formatted_messages = [{"role": "user" if isinstance(m, HumanMessage) else "assistant", "content": m.content} for m in messages]
-    
+
     # Get response from the Azure model
     response_content = call_azure_openai(formatted_messages)
-    
+
     # Return the response message wrapped in the expected format
     return {"messages": [HumanMessage(content=response_content)]}
 
@@ -56,9 +57,11 @@ def call_model(state: MessagesState):
 def should_continue(state: MessagesState) -> Literal["tools", END]:
     messages = state['messages']
     last_message = messages[-1]
-    # If the LLM makes a tool call, then we route to the "tools" node
-    if last_message.tool_calls:
+    
+    # Check if the last message is a model's response, which might have tool calls
+    if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
         return "tools"
+    
     # Otherwise, we stop (reply to the user)
     return END
 
@@ -96,7 +99,7 @@ app = workflow.compile(checkpointer=checkpointer)
 
 # Use the Runnable
 final_state = app.invoke(
-    {"messages": [HumanMessage(content="what is the weather in sf")]},
+    {"messages": [HumanMessage(content="what is the nfl record of the sf football team")]},
     config={"configurable": {"thread_id": 42}}
 )
 
