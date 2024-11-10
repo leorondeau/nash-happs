@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import re
 from datetime import datetime
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
@@ -16,21 +15,6 @@ VISION_KEY = os.environ["VISION_KEY"]
 # Authenticate client
 computervision_client = ComputerVisionClient(VISION_ENDPOINT, CognitiveServicesCredentials(VISION_KEY))
 
-=======
-
-from azure.cognitiveservices.vision.computervision import ComputerVisionClient
-from msrest.authentication import CognitiveServicesCredentials
-import os
-from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
-import time
-
-# Set up your credentials
-subscription_key = ""  # Replace with your API key
-endpoint = ""  # Replace with your endpoint URL
-
-# Authenticate client
-computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
->>>>>>> main
 
 # Function to extract text from an image
 def extract_text_from_image(image_path):
@@ -49,7 +33,6 @@ def extract_text_from_image(image_path):
             break
         time.sleep(1)
 
-<<<<<<< HEAD
     # Collect extracted text lines
     extracted_lines = []
     if result.status == OperationStatusCodes.succeeded:
@@ -91,20 +74,3 @@ def is_current_week(text_lines):
                 print(f"Error parsing date: {e} in line '{line}'")
     
     return False
-=======
-    # Print the results
-    if result.status == OperationStatusCodes.succeeded:
-        for text_result in result.analyze_result.read_results:
-            for line in text_result.lines:
-                print(line.text)
-
-# Test block
-if __name__ == "__main__":
-    # Provide the path to your image
-    image_path = "/Users/admin/workspace/nash-happs/backend/temp/2024-08-12_16-56-30_UTC.jpg"
-    
-    if os.path.exists(image_path):
-        extract_text_from_image(image_path)
-    else:
-        print(f"Image file {image_path} not found.")
->>>>>>> main

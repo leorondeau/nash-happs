@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import os
 from dotenv import load_dotenv
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
@@ -11,16 +10,6 @@ VISION_KEY = os.environ["VISION_KEY"]
 
 # Authenticate the client
 computervision_client = ComputerVisionClient(VISION_ENDPOINT, CognitiveServicesCredentials(VISION_KEY))
-=======
-from azure.cognitiveservices.vision.computervision import ComputerVisionClient
-from msrest.authentication import CognitiveServicesCredentials
-
-subscription_key = ""
-endpoint = ""
-
-# Authenticate the client
-computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
->>>>>>> main
 
 # Basic test to verify the connection
 def test_connection():
