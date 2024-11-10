@@ -55,7 +55,6 @@ def fetch_and_validate_instagram_posts(username):
 
         image_path = image_files[0]
 
-        # Extract text from image using the Azure function
         extracted_text_lines = extract_text_from_image(image_path)
         print(extracted_text_lines)
         # Validate if the post has the correct date range using the list of lines
