@@ -43,8 +43,7 @@ backend/*.sqlite3
 backend/settings.py
 session.sql
 
-temp
-/temp
+temp/
 
 # Git Large File Storage
 *.gitattributes
