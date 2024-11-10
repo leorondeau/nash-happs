@@ -1,6 +1,10 @@
-# validate_agent.py
+import sys
+import os
+print(sys.path)
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_root)
 
-from base_agent import BaseAgent
+from nashhappsapi.agents.base_agent import BaseAgent
 from datetime import datetime
 
 class ValidateAgent(BaseAgent):

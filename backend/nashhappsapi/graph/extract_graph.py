@@ -1,10 +1,11 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+sys.path.append(project_root)
 
 from langgraph.graph import StateGraph
-from agents.extract_agent import ExtractAgent
-from agents.validate_agent import ValidateAgent
+from nashhappsapi.agents.extract_agent import ExtractAgent
+from nashhappsapi.agents.validate_agent import ValidateAgent
 from state.extract_state import ExtractState
 from typing import Literal
 
@@ -17,7 +18,6 @@ validate_agent = ValidateAgent()
 
 # Create the state graph
 graph = StateGraph(
-    name="Extract and Validate Graph",
     start_node=extract_agent,
     initial_state=initial_state
 )

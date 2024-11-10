@@ -1,5 +1,13 @@
-from base_agent import BaseAgent
-from backend.nashhappsapi.tools import ExtractTextTool, FileSearchTool, WriteFileTool
+import sys
+import os
+print(sys.path)
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_root)
+
+from nashhappsapi.agents.base_agent import BaseAgent
+from nashhappsapi.tools.extract_text_tool import ExtractTextTool
+from nashhappsapi.tools.file_search_tool import FileSearchTool
+from nashhappsapi.tools.write_file_tool import WriteFileTool
 
 class ExtractAgent(BaseAgent):
     def __init__(self):
