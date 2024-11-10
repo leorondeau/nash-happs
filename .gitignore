@@ -29,6 +29,7 @@ backend/.env
 
 # Virtual environment
 backend/venv/
+.venv
 
 # SQLite databases
 backend/*.db
