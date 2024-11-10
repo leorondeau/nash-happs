@@ -1,0 +1,18 @@
+[
+  {
+    "model": "nashhappsapi.venue",
+    "pk": 1,
+    "fields": {
+      "name": "Venue 1",
+      "website": "https://venue1.com"
+    }
+  },
+  {
+    "model": "nashhappsapi.venue",
+    "pk": 2,
+    "fields": {
+      "name": "Venue 2",
+      "website": "https://venue2.com"
+    }
+  }
+]

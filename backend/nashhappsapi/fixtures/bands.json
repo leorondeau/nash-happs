@@ -1,0 +1,18 @@
+[
+  {
+    "model": "nashhappsapi.band",
+    "pk": 1,
+    "fields": {
+      "name": "Band 1",
+      "spotify": "https://open.spotify.com/artist/band1"
+    }
+  },
+  {
+    "model": "nashhappsapi.band",
+    "pk": 2,
+    "fields": {
+      "name": "Band 2",
+      "spotify": "https://open.spotify.com/artist/band2"
+    }
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "model": "nashhappsapi.creator",
+    "pk": 1,
+    "fields": {
+      "username": "creator1",
+      "email": "creator1@example.com",
+      "user": 1
+    }
+  }
+]
