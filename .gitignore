@@ -1,6 +1,9 @@
 # Node.js dependencies
 frontend/node_modules/
+<<<<<<< HEAD
 /Users/admin/workspace/nash-happs/frontend/node_modules
+=======
+>>>>>>> main
 
 # Next.js build and cache
 frontend/.next/
@@ -25,6 +28,7 @@ yarn-error.log*
 
 # Environment variables (local development)
 backend/.env
+<<<<<<< HEAD
 *.env
 *.local
 env
@@ -36,6 +40,14 @@ env
 backend/venv/
 backend/venv
 /Users/admin/workspace/nash-happs/backend/venv
+=======
+*.env*.local
+.env
+
+# Virtual environment
+backend/venv/
+.venv
+>>>>>>> main
 
 # SQLite databases
 backend/*.db
@@ -65,5 +77,8 @@ __pycache__/
 .pnp
 .pnp.js
 .yarn/install-state.gz
+<<<<<<< HEAD
 
 backup-repo/
+=======
+>>>>>>> main
